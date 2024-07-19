@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fs::read_to_string, os::unix::process};
+use std::{collections::HashMap,};
 #[derive(Debug, PartialEq)]
 pub enum Method {
     Get,
@@ -123,9 +123,10 @@ mod test {
 
     #[test]
     fn test_read_http(){
-        let s: String = String::from("GET /greeting HTTP/1.1/r/nHost: localhost:3000/r/nUser-Agent: curl/7.71.1/r/nAccept: */*/r/n/r/n");
+        let s: String = String::from("GET /greeting HTTP/1.1\r\nHost: localhost:3000\r\nUser-Agent: curl/7.71.1\r\nAccept: */*\r\n\r\n");
+        println!("string is:{}",s);
         let mut headers_expected = HashMap::new();
-        headers_expected.insert("HOST".into()," localhost".into());
+        headers_expected.insert("Host".into()," localhost".into());
         headers_expected.insert("Accept".into()," */*".into());
         headers_expected.insert("User-Agent".into()," curl/7.71.1".into());
         let req: HttpRequest = s.into();
